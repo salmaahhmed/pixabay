@@ -14,14 +14,14 @@ class ImagesPage extends StatefulWidget {
 }
 
 class _ImagesPageState extends State<ImagesPage> {
-  late GetImagesBloc issuesBloc;
+  late GetImagesBloc getImagesBloc;
   List<String> sort = ["popular", "latest"];
   List<String> filter = ["all", "photo", "illustration", "vector"];
 
   @override
   void initState() {
     super.initState();
-    issuesBloc = getIt.get<GetImagesBloc>()
+    getImagesBloc = getIt.get<GetImagesBloc>()
       ..add(GetImagesEvent(constant.ImageType.all.toString().split('.').last,
           constant.Order.popular.toString().split('.').last, widget.category));
   }
@@ -73,7 +73,7 @@ class _ImagesPageState extends State<ImagesPage> {
       body: Container(
         height: MediaQuery.of(context).size.height * 0.85,
         child: BlocBuilder<GetImagesBloc, GetImagesState>(
-            bloc: issuesBloc,
+            bloc: getImagesBloc,
             builder: (context, GetImagesState currentState) {
               if (currentState is GetImagesInitial) {
                 return Center(
@@ -100,7 +100,7 @@ class _ImagesPageState extends State<ImagesPage> {
                       SizedBox(height: 20),
                       InkWell(
                         child: Icon(Icons.refresh),
-                        onTap: () => issuesBloc.add(
+                        onTap: () => getImagesBloc.add(
                           GetImagesEvent(
                             constant.ImageType.all.toString().split('.').last,
                             constant.Order.popular.toString().split('.').last,

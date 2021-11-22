@@ -14,14 +14,14 @@ class VideosPage extends StatefulWidget {
 }
 
 class _VideosPageState extends State<VideosPage> {
-  late GetVideosBloc issuesBloc;
+  late GetVideosBloc videosBloc;
   List<String> sort = ["popular", "latest"];
   List<String> filter = ["all", "film", "animation"];
 
   @override
   void initState() {
     super.initState();
-    issuesBloc = getIt.get<GetVideosBloc>()
+    videosBloc = getIt.get<GetVideosBloc>()
       ..add(GetVideo(constant.ImageType.all.toString().split('.').last,
           constant.Order.popular.toString().split('.').last, widget.category));
   }
@@ -73,7 +73,7 @@ class _VideosPageState extends State<VideosPage> {
       body: Container(
         height: MediaQuery.of(context).size.height * 0.85,
         child: BlocBuilder<GetVideosBloc, GetVideosState>(
-            bloc: issuesBloc,
+            bloc: videosBloc,
             builder: (context, GetVideosState currentState) {
               if (currentState is GetVideosInitial) {
                 return Center(
@@ -100,7 +100,7 @@ class _VideosPageState extends State<VideosPage> {
                       SizedBox(height: 20),
                       InkWell(
                         child: Icon(Icons.refresh),
-                        onTap: () => issuesBloc.add(
+                        onTap: () => videosBloc.add(
                           GetVideo(
                             constant.ImageType.all.toString().split('.').last,
                             constant.Order.popular.toString().split('.').last,
